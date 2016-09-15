@@ -36,6 +36,31 @@ app.get('/createPost/:postData/:postComment/:postUser', function (req, res) {
 });
 
 
+app.get('/getFollowerPosts/:postUser', function (req, res) {
+    console.log("getFollowerPosts:" + req.params.postUser);
+    var createPost = {        
+        postUser:  req.params.postUser      
+    };
+    console.log("createPost json obj:" +  createPost.postUser);
+    jSONStr = JSON.stringify(createPost);
+    console.log("jSONStr: " + jSONStr);
+    jSONStr=  '[{ "name": "Sam",    "picture": "test1.png",    "date": "09/15/2016 10:00 am" }]';
+    console.log("jSONStrGet: " + jSONStr);
+    res.send(jSONStr);
+   /** var p = dbgetFollowerPost(jSONStr);
+    p.then(
+        (val) => {
+            //res.send(val);
+            jsonStr=  '{ "name": "Sam",    "picture": "temp.jpeg",    "date": "09/15/2016 10:00 am" }';
+            console.log("jSONStrGet: " + jSONStr);
+            res.send(jsonStr);
+            }
+        ).catch(
+            (err) => {
+            res.send(err);
+        });  */        
+});
+
 /*
 app.get('/getUserFeeds/:userId', function(req, res) {
      var useid = req.params.userId
