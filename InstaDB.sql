@@ -8,7 +8,7 @@ CREATE TABLE Post(
   PosterId  int,
   PostPic TEXT,   
   PostDesc   TEXT,  
-  PostDate TEXT,  
+  PostTime DATETIME NOT NULL DEFAULT (GETDATE()),
   FOREIGN KEY(PosterId) REFERENCES User(PK_User)  
 );
 Create Table Following(
@@ -29,6 +29,7 @@ Create Table Comment(
 PK_Comment Integer not null primary key,
 CommenterId int,
 PostId int,
+CommTime DATETIME NOT NULL DEFAULT (GETDATE()),
 FOREIGN KEY(CommenterId) REFERENCES User(PK_User),
 FOREIGN KEY(PostId) REFERENCES Post(PK_Post)
 );
