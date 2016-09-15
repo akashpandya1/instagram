@@ -1,7 +1,7 @@
 "use strict";
 
 var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('InstaDB.sqlites');
+var db = new sqlite3.Database('InstaDB.sqlite');
 
 
 SelectUserProfile(db,4);
@@ -13,10 +13,10 @@ function SelectUserProfile(db,UserId){
                 console.log(err);
 
             }else {
-                console.log(row);
-                var jsonStr = JSON.parse(row);
-                stmt.run(jsonStr[0].Name, jsonStr[0].ProfilePic, jsonStr[0].Posts, jsonStr[0].Followers, jsonStr[0].Followee);
-                stmt.finalize();
+
+                var profileResult=JSON.stringify(row);
+                console.log(profileResult);
+                return profileResult;
                 resolve();
             }
         });
