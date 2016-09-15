@@ -3,11 +3,11 @@
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('InstaDB.sqlite');
 
-<<<<<<< HEAD
+
 
 SelectUserProfile(db,4);
-=======
-/*
+
+
 SelectUserProfile(db, 'UserId');
 >>>>>>> 4bd81fc51372966561a25bd4129d98deb3f9e908
 function SelectUserProfile(db,UserId){
@@ -43,12 +43,12 @@ function SelectHomeFeed(Db,UserId){
                 resolve();
             }
         });
-<<<<<<< HEAD
+
     });
 }
 
 
-=======
+
     }); 
-} */
->>>>>>> 4bd81fc51372966561a25bd4129d98deb3f9e908
+}
+
