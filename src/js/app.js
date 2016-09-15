@@ -1,69 +1,42 @@
-var express = require('express'),
-    app = express();
-    sqlite3 = require('sqlite3').verbose(),
-    db = new sqlite3.Database('InstaDB.sqlite'),
-    fs = require('fs'),
-    html = fs.readFileSync('./tweet.html'),
-    createtweet = fs.readFileSync('./createtweet.html'),
-    addUser = fs.readFile('./user.html'),
-    dbInsertTweet = require('./tweetdb.js').insertTweet,
-    dbDeleteTweet = require('./tweetdb.js').deleteRec,
-    dbSelectUserTweets = require('./tweetdb.js').selectUserTweets,  
-    dbAllTweets = require('./tweetdb.js').selectRec,
-    dbAddUser = require('./userdb.js').addUser,
-    dbSelectUserFeeds = require('./tweetdb.js').selectUserFeeds,
-    dbGetUserIDByName = require('./userdb.js').getUserIDByName,
-    dbGetReplies = require('./tweetdb.js').getReplies,
-    dbHasReplies = require('./tweetdb.js').hasReplies,
-    bodyParser = require('body-parser');
-    ejs = require('ejs');
-    os = require('os');
-
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({
-    extended: true
-})); 
+express = require('express');
+app = express();
+sqlite3 = require('sqlite3').verbose();
+db = new sqlite3.Database('InstaDB.sqlite');
+fs = require('fs');     
+dbCreatePost = require('../../db.js').createPost;   
+bodyParser = require('body-parser');   
+os = require('os');
+app.use(bodyParser.json());
+app.use(
+    bodyParser.urlencoded({
+        extended: true
+    })
+); 
 
  
 app.use(express.static('/public'));
 
- 
-app.post('/tweet', function (req, res) {
-    console.log("tweet");
-    var user = {
-        userid: req.body.userid,
-    }
-    console.log("tweet userid:" + user.userid);
-    fs.readFile('createtweet.html', 'utf-8', function (err, content) {
-        if (err) {
-            res.end('error occurred');
-            return;
-        }
-
-        var renderedHtml = ejs.render(content, { userid: user.userid });
-        console.log("renderedHtml:" + renderedHtml);
-        res.end(renderedHtml);
-    });
+app.listen(3000, function () {
+    console.log('Example app listening on port 3000!');
 });
 
-app.post('/user', function(req, res) {    
-    console.log("user");
-     var user = {
-        userid: req.body.userid,
-     }       
-     console.log("user userid:" + user.userid);   
-     fs.readFile('user.html', 'utf-8', function(err, content) {
-         if (err) {
-             res.end('error occurred');
-             return;
-         } 
 
-     var renderedHtml = ejs.render(content, {userid: user.userid});
-     res.end(renderedHtml);  
-   });  
+app.get('/createPost/:postData/:postComment/:postUser', function (req, res) {
+    console.log("createPost:" + req.params.postData + "," + req.params.postComment + "," + req.params.postUser);
+    var createPost = {
+        postData:  req.params.postData,
+        postComment:  req.params.postComment,  
+        postUser:  req.params.postUser      
+    };
+    console.log("createPost json obj:" + createPost.postData + "," + createPost.postComment + "," + createPost.postUser);
+    jSONStr = '[' + JSON.stringify(createPost) + ']';
+    console.log("jSONStr: " + jSONStr);
+    dbCreatePost(jSONStr);
+    res.end();        
 });
 
- 
+
+/*
 app.get('/getUserFeeds/:userId', function(req, res) {
      var useid = req.params.userId
      console.log("userid:" + useid);   
@@ -139,19 +112,7 @@ app.post('/addUser', function(req, res) {
     res.send('user added');        
 });
  
-app.get('/createtweet/:tweetData/:userInfo/', function (req, res) {
-    var tweetData = req.params.tweetData;
-    var userInfo = req.params.userInfo;
-    var createTweet = {
-        tweetText:  req.params.tweetData,
-        authorID:  req.params.userInfo        
-    };
-    console.log("createtweet:" + createTweet.tweetText + "," + createTweet.authorID);
-    jSONStr = '[' + JSON.stringify(createTweet) + ']';
-    console.log("jSONStr: " + jSONStr);
-    dbInsertTweet(jSONStr);
-    res.end();        
-});
+
 
 app.post('/deletetweet', function (req, res) {
     console.log("deletetweet");
@@ -228,9 +189,6 @@ app.post('/selectRecForTweet', function (req, res) {
 
 });  
 
-
-app.listen(8080, function () {
-    console.log('Example app listening on port 8080!');
-});
+*/
 
  

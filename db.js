@@ -1,10 +1,15 @@
-"use strict";
+ 
 
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('InstaDB.sqlite');
 
+<<<<<<< HEAD
 
 SelectUserProfile(db,4);
+=======
+/*
+SelectUserProfile(db, 'UserId');
+>>>>>>> 4bd81fc51372966561a25bd4129d98deb3f9e908
 function SelectUserProfile(db,UserId){
     return new Promise(function (resolve,reject) {
         db.each("Select U.Name, U.ProfilePic, p.PostCount, f.FollowerCount, fe.FolloweeCount from User U,(select count(PosterId) as PostCount from Post where PosterId='"+UserId+"') as p,(select count(FollowerId) as FollowerCount from Following where FollowerId='"+UserId+"') as f,(select count(FolloweeId) as FolloweeCount from Following where FolloweeId='"+UserId+"') as fe where U.PK_user = '"+UserId+"'", function (err, row) {
@@ -38,7 +43,12 @@ function SelectHomeFeed(Db,UserId){
                 resolve();
             }
         });
+<<<<<<< HEAD
     });
 }
 
 
+=======
+    }); 
+} */
+>>>>>>> 4bd81fc51372966561a25bd4129d98deb3f9e908
