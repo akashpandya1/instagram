@@ -13,13 +13,19 @@ export default class Layout extends React.Component {
     var postComment = document.getElementById("postComment").value;
     console.log("postPic:" + postPic + ",postComment:" + postComment);
     var xhttp = new XMLHttpRequest();
-    var postUrl = "http://localhost:8080/createtPost/" + postPic + "/" + postComment + "/";
+    var postUrl = "http://localhost:3000/createPost/" + postPic + "/" + postComment + "/1/";
     console.log('postUrl:' + postUrl);
     console.log(xhttp.responseText);
     xhttp.open("GET", postUrl, true);
     xhttp.send();
     document.getElementById("alertPost").innerHTML = 'Post Submitted!';
     document.getElementById("alertPost").style['color'] = 'green';
+    setTimeout(this.fadeout(), 3000);
+  }
+
+  fadeout() {
+    
+    document.getElementById("alertPost").innerHTML = '';
   }
 
   render() {
