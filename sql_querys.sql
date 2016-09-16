@@ -19,5 +19,22 @@ ALTER TABLE Comment
  ALTER TABLE Post DROP COLUMN PostDesc
  
  select * from Comment
+ 
+ Insert into Post (PosterId, PostPic) values ('4','fatcat')
+ 
+ Select * from Post
+ where posterid='4' and postpic='fatcat'
+ 
+ Insert into Comment (CommenterId, PostId, Text) values ('4',(Select PK_Post from Post
+ where posterid='4' and postpic='fatcat'),'i love my fat cat')
+ 
+ select * from comment
+ 
+ 
+ INSERT INTO [DB_A].[dbo.a_test](a,b,c, d)
+    select p.product_info, p.product_date, p.smth, pr.program_name, pr.program_smth
+    FROM [DB_B].dbo.products p LEFT JOIN
+         [DB_B].dbo.program pr
+         ON p.program_name = pr.product_info;
 
 

@@ -11,7 +11,7 @@ CREATE TABLE Post(
   FOREIGN KEY(PosterId) REFERENCES User(PK_User)  
 );
 Create Table Following(
-PK_Follwing INTEGER NOT NULL PRIMARY KEY,
+PK_Following INTEGER NOT NULL PRIMARY KEY,
 FollowerId int,
 FolloweeId int,
 FOREIGN KEY(FollowerId) REFERENCES User(PK_User),
