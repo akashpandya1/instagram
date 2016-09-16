@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f33ec80d-bab4-4ca3-9b51-ac83a071f655" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.js" afterPath="$PROJECT_DIR$/db.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/InstaDB.sqlite" afterPath="$PROJECT_DIR$/InstaDB.sqlite" />
     </list>
     <ignored path="instagram.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,8 +28,8 @@
       <file leaf-file-name="db.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/db.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="702">
-              <caret line="86" column="13" selection-start-line="86" selection-start-column="13" selection-end-line="86" selection-end-column="13" />
+            <state relative-caret-position="753">
+              <caret line="89" column="1" selection-start-line="89" selection-start-column="1" selection-end-line="89" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -267,15 +267,15 @@
       <updated>1473958143035</updated>
       <workItem from="1473958144265" duration="8838000" />
       <workItem from="1473972921443" duration="9932000" />
-      <workItem from="1474045413712" duration="551000" />
+      <workItem from="1474045413712" duration="1281000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19321000" />
+    <option name="totallyTimeSpent" value="20051000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-4" y="-4" width="1928" height="1036" extended-state="6" />
+    <frame x="-4" y="-4" width="1928" height="1036" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.064278185" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -556,8 +556,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/db.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="702">
-          <caret line="86" column="13" selection-start-line="86" selection-start-column="13" selection-end-line="86" selection-end-column="13" />
+        <state relative-caret-position="753">
+          <caret line="89" column="1" selection-start-line="89" selection-start-column="1" selection-end-line="89" selection-end-column="1" />
           <folding />
         </state>
       </provider>
