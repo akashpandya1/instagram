@@ -4,6 +4,7 @@ sqlite3 = require('sqlite3').verbose();
 db = new sqlite3.Database('./InstaDB.sqlite');
 fs = require('fs'); 
 dbselectHomeFeed = require('./db.js').selectHomeFeed;  
+dbauthenticateUser = require('./db.js').AuthenticateUser;
 bodyParser = require('body-parser');   
 os = require('os');
 app.use(bodyParser.json());
@@ -24,7 +25,7 @@ app.get('/createPost/:postData/:postComment/:postUser', function (req, res) {
     var createPost = {
         postData:  req.params.postData,
         postComment:  req.params.postComment,  
-        postUser:  req.params.postUser   0
+        postUser:  req.params.postUser      
     };
     console.log("createPost json obj:" + createPost.postData + "," + createPost.postComment + "," + createPost.postUser);
     jSONStr = '[' + JSON.stringify(createPost) + ']';
@@ -33,6 +34,29 @@ app.get('/createPost/:postData/:postComment/:postUser', function (req, res) {
     res.end();        
 });
 
+app.get('/AuthUser/:username/:password', function (req, res) {
+    console.log("AuthUser: Username " + req.params.username + ", Password " + req.params.password);
+    var validateUser = {
+        username:  req.params.username,  
+        password:  req.params.password     
+    };
+    //console.log("AuthenticateUser json obj:"+ validateUser.username + "," + validateUser.password);
+    jSONStr = '[' + JSON.stringify(validateUser) + ']';
+    //console.log("jSONStr: " + jSONStr);
+    var p = dbauthenticateUser(validateUser.username);
+    p.then(
+        (resolve)=>{
+            var strValue = JSON.stringify(resolve);
+            //console.log("resolved! : " + strValue);
+            res.send(strValue);
+        }
+    ).catch(
+        (reject)=>{
+            //console.log("reject : " + reject);
+            res.send(reject);
+        }
+    );
+});
 
 app.get('/getFollowerPosts/:userId', function (req, res) {
     console.log("getFollowerPosts:" + req.params.userId); 
