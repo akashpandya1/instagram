@@ -24,8 +24,8 @@ app.get('/createPost/:postData/:postComment/:postUser', function (req, res) {
     var createPost = {
         postData:  req.params.postData,
         postComment:  req.params.postComment,  
-        postUser:  req.params.postUser   0
-    };
+        postUser:  req.params.postUser 
+     };
     console.log("createPost json obj:" + createPost.postData + "," + createPost.postComment + "," + createPost.postUser);
     jSONStr = '[' + JSON.stringify(createPost) + ']';
     console.log("jSONStr: " + jSONStr);
