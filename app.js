@@ -1,9 +1,9 @@
 express = require('express');
 app = express();
 sqlite3 = require('sqlite3').verbose();
-db = new sqlite3.Database('InstaDB.sqlite');
-fs = require('fs');     
-dbCreatePost = require('../../db.js').createPost;   
+db = new sqlite3.Database('./InstaDB.sqlite');
+fs = require('fs'); 
+dbselectHomeFeed = require('./db.js').selectHomeFeed;  
 bodyParser = require('body-parser');   
 os = require('os');
 app.use(bodyParser.json());
@@ -12,10 +12,8 @@ app.use(
         extended: true
     })
 ); 
-
  
-app.use(express.static('/public'));
-
+ 
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!');
 });
@@ -36,29 +34,19 @@ app.get('/createPost/:postData/:postComment/:postUser', function (req, res) {
 });
 
 
-app.get('/getFollowerPosts/:postUser', function (req, res) {
-    console.log("getFollowerPosts:" + req.params.postUser);
-    var createPost = {        
-        postUser:  req.params.postUser      
-    };
-    console.log("createPost json obj:" +  createPost.postUser);
-    jSONStr = JSON.stringify(createPost);
-    console.log("jSONStr: " + jSONStr);
-    jSONStr=  '[{ "name": "Sam",    "picture": "test1.png",    "date": "09/15/2016 10:00 am" }]';
-    console.log("jSONStrGet: " + jSONStr);
-    res.send(jSONStr);
-   /** var p = dbgetFollowerPost(jSONStr);
+app.get('/getFollowerPosts/:userId', function (req, res) {
+    console.log("getFollowerPosts:" + req.params.userId); 
+   var p = dbselectHomeFeed(req.params.userId);
     p.then(
-        (val) => {
-            //res.send(val);
-            jsonStr=  '{ "name": "Sam",    "picture": "temp.jpeg",    "date": "09/15/2016 10:00 am" }';
-            console.log("jSONStrGet: " + jSONStr);
-            res.send(jsonStr);
+        (val) => {            
+          console.log("getFollowerPosts2 :" + val);
+          res.send(val);
+         
             }
         ).catch(
             (err) => {
             res.send(err);
-        });  */        
+        });       
 });
 
 /*
