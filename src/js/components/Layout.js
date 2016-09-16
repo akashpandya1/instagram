@@ -44,10 +44,10 @@ export default class Layout extends React.Component {
         for (var i = 0; i < obj.length; i++) {		        
             console.log(i + " -> " + obj[i]['Name'] + "," + obj[i]['PostPic'] + "," + obj[i]['Text'] +  "," + obj[i]['PostTime']);
           var cp = document.createElement('span');
-           cp.innerHTML = obj[i]['Text'] + '&nbsp;&nbsp;&nbsp;' + obj[i]['PostTime'] +
+           cp.innerHTML = obj[i]['Name'] + '&nbsp;&nbsp;&nbsp;' + obj[i]['PostTime'] +
             '<br/>' +
-            '<img src="./public/graphics/' + obj[i]['PostPic'] + '" alt="picture">' +  '<br/>';
-          if (i % 2 != 0) {
+            '<img src="./public/graphics/' + obj[i]['PostPic'] + '" alt="picture">' +  '<br/>' + obj[i]['Text'] +  '<br/><br/>';
+              if (i % 2 != 0) {
             cp.style['background-color'] = '#d3d3d3';
           }
           document.getElementById("followeePosts").appendChild(cp);
@@ -78,7 +78,9 @@ export default class Layout extends React.Component {
         <div id="alertPost"></div>
         <br/>
         <br/>
-        &nbsp; &nbsp; <b>The lastest post from the people you are following: </b>&nbsp;
+        <b>The lastest post from the people you are following: </b> 
+        <br/>
+        <br/>
         <div id="followeePosts"> </div>
 
       </div>

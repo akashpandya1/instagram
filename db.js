@@ -1,8 +1,6 @@
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('./InstaDB.sqlite');
 
-
-
 //SelectUserProfile(db,4);
 /*
 SelectUserProfile(db, 'UserId');
@@ -17,17 +15,12 @@ function SelectUserProfile(UserId){
             }else {
 
                 var profileResult=JSON.stringify(row);
-<<<<<<< HEAD
                 console.log(profileResult);                 
-=======
-                console.log(profileResult);
->>>>>>> 3fb96650f851a7d3fe12a89cde287c6d0a0a71d9
                 resolve(profileResult);
             }
         });
     });
 }
-<<<<<<< HEAD
 */
  
 //selectHomeFeed(1); 
@@ -56,10 +49,9 @@ function selectHomeFeed(userId) {
             console.log(err);
         });
 }
-=======
-
-SelectHomeFeed(db,1)
-function SelectHomeFeed(Db,UserId){
+ 
+//SelectHomeFeed1(db,1)
+function SelectHomeFeed1(Db,UserId){
     return new Promise(function (resolve, reject) {
         db.each("select u.name, p.PostPic, lp.LikeCount, c.text from User as u, Post p, (select count(PostPicId) as LikeCount from LikePic where PostPicId='"+UserId+"') as lp, Comment C where u.PK_User='"+UserId+"' and u.PK_User=p.PosterId and C.PostId=P.PK_Post", function (err, row) {
             if (err) {
@@ -76,4 +68,4 @@ function SelectHomeFeed(Db,UserId){
     });
 }
 
->>>>>>> 3fb96650f851a7d3fe12a89cde287c6d0a0a71d9
+ 
