@@ -18,8 +18,7 @@ function SelectUserProfile(db,UserId){
 
                 var profileResult=JSON.stringify(row);
                 console.log(profileResult);
-                return profileResult;
-                resolve();
+                resolve(profileResult);
             }
         });
     });
@@ -36,16 +35,10 @@ function SelectHomeFeed(Db,UserId){
             }else {
                 var homeFeedResult=JSON.stringify(row);
                 console.log(homeFeedResult);
-                return homeFeedResult;
-                resolve();
+                resolve(homeFeedResult);
             }
         });
 
     });
-}
-
-
-
-    }); 
 }
 
