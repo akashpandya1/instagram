@@ -10,8 +10,7 @@ export default class Layout extends React.Component {
   }
 
   componentDidMount() {
-     this.getFollowerPosts();
-     setTimeout(this.fadeout(), 3000);
+     this.getFollowerPosts();      
   }
 
   submitPost() {
@@ -29,24 +28,25 @@ export default class Layout extends React.Component {
     // setTimeout(this.fadeout(), 3000);
   }
 
+
   getFollowerPosts() {
     var xhttp = new XMLHttpRequest();
     var postUrl = "http://localhost:3000/getFollowerPosts/1/";
     console.log('postUrl:' + postUrl);
-    xhttp.onreadystatechange = function () {
+  
+     xhttp.onreadystatechange = function () {
       if (xhttp.readyState === 4 && xhttp.status === 200) {
         console.log("xhttp.responseText:" + xhttp.responseText);
-        var jsontext = '[{"name":"Jesper","picture":"./public/graphics/test1.png","date":"555-0100"}]';
-        var obj = JSON.parse(jsontext);
-        console.log("jsonObj:" + obj);
-        for (var i = 0; i < obj.length; i++) {
-		         console.log('test');
-            console.log(i + " -> " + obj[i]['name'] + "," + obj[i]['picture'] + "," + obj[i]['date']);
+        var obj = JSON.parse(xhttp.responseText);
+        console.log("obj:" + obj);
+       // var jsontext = '[{"name":"Jesper","picture":"./public/graphics/test1.png","date":"555-0100"}]';
+       console.log("jsonObj:" + obj);
+        for (var i = 0; i < obj.length; i++) {		        
+            console.log(i + " -> " + obj[i]['Name'] + "," + obj[i]['PostPic'] + "," + obj[i]['Text'] +  "," + obj[i]['PostTime']);
           var cp = document.createElement('span');
-          var userFollowing = obj[i]['name'] + '&nbsp;&nbsp;&nbsp;' + obj[i]['date'] +
+           cp.innerHTML = obj[i]['Text'] + '&nbsp;&nbsp;&nbsp;' + obj[i]['PostTime'] +
             '<br/>' +
-            '<img src="' + obj[i]['picture'] + '" alt="picture">';
-          cp.innerHTML = userFollowing; 
+            '<img src="./public/graphics/' + obj[i]['PostPic'] + '" alt="picture">' +  '<br/>';
           if (i % 2 != 0) {
             cp.style['background-color'] = '#d3d3d3';
           }
@@ -54,7 +54,7 @@ export default class Layout extends React.Component {
         }
       }
     }
-    xhttp.open("GET", postUrl, true);
+    xhttp.open("GET", postUrl, false);
     xhttp.send(); 
   }
 
