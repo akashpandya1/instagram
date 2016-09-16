@@ -6,7 +6,9 @@ import Header from "./Header";
 export default class Layout extends React.Component {
   constructor() {
     super();
-    
+    this.state = {
+      title: "init",
+    };    
   }
 
   componentDidMount() {
@@ -24,8 +26,7 @@ export default class Layout extends React.Component {
     xhttp.open("GET", postUrl, true);
     xhttp.send();
     document.getElementById("alertPost").innerHTML = 'Post Submitted!';
-    document.getElementById("alertPost").style['color'] = 'green';
-    // setTimeout(this.fadeout(), 3000);
+    document.getElementById("alertPost").style['color'] = 'green';     
   }
 
 
@@ -68,17 +69,17 @@ export default class Layout extends React.Component {
         <Header/>
         <br/>
         <br/>
-        &nbsp; &nbsp; <b>Picture: </b>&nbsp; <input type="text" id="postPicture" size="50" maxLength="50" name="postPicture" value={this.props.postPicture} />
+        <b>Picture: </b>&nbsp; <input type="text" id="postPicture" size="50" maxLength="50" name="postPicture" value={this.props.postPicture} />
         <br/>
         <br/>
-        &nbsp; &nbsp; <b>Comment: </b>&nbsp; <input type="text"  id="postComment"  size="75" maxLength="75" name="postComment" value={this.props.postComment} />
+        <b>Comment: </b>&nbsp; <input type="text"  id="postComment"  size="75" maxLength="75" name="postComment" value={this.props.postComment} />
         <br/>
         <br/>
         <input type="button" id="postButton" name="postButton" value="Post" onClick={this.submitPost.bind(this) } />
         <div id="alertPost"></div>
         <br/>
         <br/>
-        <b>The lastest post from the people you are following: </b> 
+        <b>Lastest Posts: </b> 
         <br/>
         <br/>
         <div id="followeePosts"> </div>
