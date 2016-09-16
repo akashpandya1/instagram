@@ -11,6 +11,7 @@ export default class Layout extends React.Component {
 
   componentDidMount() {
      this.getFollowerPosts();
+     setTimeout(this.fadeout(), 3000);
   }
 
   submitPost() {
@@ -35,8 +36,7 @@ export default class Layout extends React.Component {
     xhttp.onreadystatechange = function () {
       if (xhttp.readyState === 4 && xhttp.status === 200) {
         console.log("xhttp.responseText:" + xhttp.responseText);
-        var jsontext = '[{"name":"Jesper","picture":"Aaberg","date":"555-0100"}]';
-          //[{ "name": "Sam",    "picture": "test1.png",    "date": "09/15/2016 10:00 am" }]
+        var jsontext = '[{"name":"Jesper","picture":"./public/graphics/test1.png","date":"555-0100"}]';
         var obj = JSON.parse(jsontext);
         console.log("jsonObj:" + obj);
         for (var i = 0; i < obj.length; i++) {
@@ -46,6 +46,7 @@ export default class Layout extends React.Component {
           var userFollowing = obj[i]['name'] + '&nbsp;&nbsp;&nbsp;' + obj[i]['date'] +
             '<br/>' +
             '<img src="' + obj[i]['picture'] + '" alt="picture">';
+          cp.innerHTML = userFollowing; 
           if (i % 2 != 0) {
             cp.style['background-color'] = '#d3d3d3';
           }
