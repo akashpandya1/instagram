@@ -51,7 +51,7 @@ export default class Layout extends React.Component {
             hideMe = false;
             document.getElementById("hideMe").style.display = "inline";
             document.getElementById("login").style.display = "none";
-            //console.log("user id : " + id);
+            console.log("user id : " + id);
             //temp fix.
             postUrl = "http://localhost:3000/getFollowerPosts/"+id+"/";
             console.log('postUrl:' + postUrl);

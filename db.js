@@ -20,6 +20,50 @@ function dbSelectUserProfile(UserId){
     });
 }
 
+exports.AuthenticateUser = AuthenticateUser;
+function AuthenticateUser(obj){
+    return new Promise(
+       (resolve, reject) => {
+           //logic
+           var table = "User";
+           var where = " WHERE Name = '" + obj + "'";
+           var sql = "SELECT PK_User, Name FROM " + table + where + ";";
+           //console.log(sql);
+           db.all(sql, function (err, rows) {
+               if (err) {
+                   //console.log(err);
+                   reject("failed!");
+                   return;
+               }
+               //console.log("typeof rows " + (typeof rows[0]));
+               if(typeof rows[0] === "undefined"){
+                   reject("failed!");
+                   return;
+               }else{
+                   // console.log("PK_User " + rows[0].PK_User);
+                   // console.log("Name " + rows[0].Name);
+                   // console.log("obj " + obj);
+                   
+                   if(rows[0].Name == obj){
+                       // console.log("row id" + rows.PK_User);
+                       // console.log("username " +rows.Name  + " pk " + rows.PK_User);
+                       resolve(rows[0].PK_User);
+                       return;
+                   }else{
+                       reject("failed!");
+                       return;
+                   }
+
+               }
+               
+               //console.log(rows);
+               //resolve(row);
+           });
+       });
+};
+
+
+
 exports.selectHomeFeed =selectHomeFeed;
 function selectHomeFeed(userId) {
     return new Promise(
@@ -54,7 +98,7 @@ var jSONStr = '{'+'"name" : "Raj",'+'"age"  : 32,'+'"married" : false'
     +'}';
 
  //   dbCreatePost(db, jSONStr);
-function dbCreatePost(db, jSONStr){
+function dbCreatePost(jSONStr){
     return new Promise(function (resolve, reject) {
         var stmt = db.prepare("Insert into Post (PosterId, PostPic) values (?,?);  Insert into Comment (CommenterId, PostId, Text) values (?,(Select PK_Post from Post where posterid=? and postpic=?),?) ",function (err) {
             if (err) {
