@@ -20,9 +20,16 @@ export default class Layout extends React.Component {
       document.getElementById("hideMe").style.display = "none";
     }    
   }
+
+
   submitPost() {
-    var postPic = document.getElementById("postPicture").value;
+    var postPic = document.getElementById("postPicture").value;    
     var postComment = document.getElementById("postComment").value;
+    console.log(postPic.lastIndexOf("\\"));
+    if (postPic.lastIndexOf("\\") != -1) {
+     var ind = postPic.lastIndexOf("\\");      
+     var postPic = postPic.substring(ind+1, postPic.length);
+    
     console.log("postPic:" + postPic + ",postComment:" + postComment);
     var xhttp = new XMLHttpRequest();
     var postUrl = "http://localhost:3000/createPost/" + postPic + "/" + postComment + "/1/";
@@ -31,8 +38,22 @@ export default class Layout extends React.Component {
     xhttp.open("GET", postUrl, true);
     xhttp.send();
     document.getElementById("alertPost").innerHTML = 'Post Submitted!';
-    document.getElementById("alertPost").style['color'] = 'green';     
+    document.getElementById("alertPost").style['color'] = 'green';  
+    } else {
+      document.getElementById("alertPost").innerHTML = 'Invalid file! Select the browse button.' 
+      document.getElementById("alertPost").style['color'] = 'red';  
+    } 
   }
+
+  getFile(elemId) {
+   var elem = document.getElementById(elemId);
+   if(elem && document.createEvent) {
+      var evt = document.createEvent("MouseEvents");
+      evt.initEvent("click", true, false);
+      elem.dispatchEvent(evt);
+   }
+}
+
 
   handleSubmit(e) {
     e.preventDefault();
@@ -96,7 +117,7 @@ export default class Layout extends React.Component {
     return (
       <div>
         <Header/>
-        <form id= "login" onSubmit={ this.handleSubmit }>
+         <form id= "login" onSubmit={ this.handleSubmit }>  
           <label>Username : <input id="username" placeholder="username" defaultValue="LindseyLow" /></label>
           <br/>
           <label>Password : <input id="password" placeholder="password" defaultValue="none" /></label>
@@ -106,7 +127,7 @@ export default class Layout extends React.Component {
         <div id="hideMe">
           <br/>
           <br/>
-          <b>Picture: </b>&nbsp; <input type="text" id="postPicture" size="50" maxLength="50" name="postPicture" value={this.props.postPicture} />
+          <b>Picture: </b>&nbsp;<input type="file" id="postPicture" name="postPicture" value={this.props.postPicture}  size="50" />
           <br/>
           <br/>
           <b>Comment: </b>&nbsp; <input type="text"  id="postComment"  size="75" maxLength="75" name="postComment" value={this.props.postComment} />
