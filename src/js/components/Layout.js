@@ -7,11 +7,6 @@ import Header from "./Header";
 var hideMe = true;
 //id for the user; 0 is no user 
 var id = 0;
-//any function that needs to be called multiple times from different methods should be 
-//created outside of the component class 
-//can't remember what stackoverflow post I found this solution on 
-//but I wanted to write it down before I forgot.
-//Fabrizio Mangoni
 export default class Layout extends React.Component {
   constructor() {
     super();
@@ -40,6 +35,36 @@ export default class Layout extends React.Component {
     var postUrl = "http://localhost:3000/createPost/" + postPic + "/" + postComment + "/1/";
     console.log('postUrl:' + postUrl);
     console.log(xhttp.responseText);
+    xhttp.onreadystatechange = function () {
+      if (xhttp.readyState === 4 && xhttp.status === 200) {
+            var getFollowUrl = "http://localhost:3000/getFollowerPosts/"+id+"/";
+            console.log('getFollowUrl:' + getFollowUrl);          
+            xhttp.onreadystatechange = function () {
+              if (xhttp.readyState === 4 && xhttp.status === 200) {
+                console.log("xhttp.responseText:" + xhttp.responseText);
+                var obj = JSON.parse(xhttp.responseText);
+                console.log("obj:" + obj);
+              // var jsontext = '[{"name":"Jesper","picture":"./public/graphics/test1.png","date":"555-0100"}]';
+              console.log("jsonObj:" + obj);
+                for (var i = 0; i < obj.length; i++) {		        
+                    console.log(i + " -> " + obj[i]['Name'] + "," + obj[i]['PostPic'] + "," + obj[i]['Text'] +  "," + obj[i]['PostTime']);
+                  var cp = document.createElement('span');
+                  cp.innerHTML = obj[i]['Name'] + '&nbsp;&nbsp;&nbsp;' + obj[i]['PostTime'] +
+                    '<br/>' +
+                    '<img src="./public/graphics/' + obj[i]['PostPic'] + '" alt="picture">' +  '<br/>' + obj[i]['Text'] +  '<br/><br/>';
+                      if (i % 2 != 0) {
+                    cp.style['background-color'] = '#d3d3d3';
+                  }
+                  document.getElementById("followeePosts").appendChild(cp);
+                }
+                document.getElementById("alertPost").innerHTML =  '';
+              }
+            }
+            xhttp.open("GET", getFollowUrl, false);
+            xhttp.send(); 
+      }
+    } 
+   
     xhttp.open("GET", postUrl, true);
     xhttp.send();
     document.getElementById("alertPost").innerHTML = 'Post Submitted!';
@@ -47,7 +72,8 @@ export default class Layout extends React.Component {
     } else {
       document.getElementById("alertPost").innerHTML = 'Invalid file! Select the browse button.' 
       document.getElementById("alertPost").style['color'] = 'red';  
-    } 
+    }
+ 
   }
 
   getFile(elemId) {
@@ -78,7 +104,7 @@ export default class Layout extends React.Component {
             document.getElementById("hideMe").style.display = "inline";
             document.getElementById("login").style.display = "none";
             console.log("user id : " + id);
-            //temp fix.
+            // Get the posted data
             postUrl = "http://localhost:3000/getFollowerPosts/"+id+"/";
             console.log('postUrl:' + postUrl);
           
