@@ -7,6 +7,11 @@ import Header from "./Header";
 var hideMe = true;
 //id for the user; 0 is no user 
 var id = 0;
+//any function that needs to be called multiple times from different methods should be 
+//created outside of the component class 
+//can't remember what stackoverflow post I found this solution on 
+//but I wanted to write it down before I forgot.
+//Fabrizio Mangoni
 export default class Layout extends React.Component {
   constructor() {
     super();
