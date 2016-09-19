@@ -70,7 +70,7 @@ function selectHomeFeed(userId) {
         (resolve, reject) => {          
            db.all("select u.name, u.pk_user, p.postpic, p.posttime, c.text  from user u, post p, comment c " + 
              "where u.pk_user = p.posterid and  u.pk_user =c.commenterid and p.pk_post = c.postid and " + 
-             "u.pk_user in ( select followeeId from following where followerId = ?) and u.pk_user = ?", userId, userId,
+             "u.pk_user in ( select followeeId from following where followerId = ?) ", userId,
            function (err, rows) {          
                     if (err) {
                         console.log(err);
