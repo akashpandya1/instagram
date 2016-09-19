@@ -4,7 +4,9 @@ sqlite3 = require('sqlite3').verbose();
 db = new sqlite3.Database('./InstaDB.sqlite');
 fs = require('fs'); 
 dbselectHomeFeed = require('./db.js').selectHomeFeed;  
-dbauthenticateUser = require('./db.js').AuthenticateUser;  
+dbauthenticateUser = require('./db.js').AuthenticateUser;
+dbAddToPostsTable = require('./db.js').dbAddToPostsTable;
+dbAddToCommentTable = require('./db.js').dbAddToCommentTable;
 bodyParser = require('body-parser');   
 os = require('os');
 app.use(bodyParser.json());
@@ -19,6 +21,7 @@ app.listen(3000, function () {
     console.log('Example app listening on port 3000!');
 });
 
+app.use('/static',express.static(__dirname +'/src'));
 
 app.get('/AuthUser/:username/:password', function (req, res) {
    console.log("AuthUser: Username " + req.params.username + ", Password " + req.params.password);
@@ -54,7 +57,8 @@ app.get('/createPost/:postData/:postComment/:postUser', function (req, res) {
     console.log("createPost json obj:" + createPost.postData + "," + createPost.postComment + "," + createPost.postUser);
     jSONStr = '[' + JSON.stringify(createPost) + ']';
     console.log("jSONStr: " + jSONStr);
-    dbCreatePost(jSONStr);
+    dbAddToPostsTable(jSONStr);
+    dbAddToCommentTable(jSONStr);
     res.end();        
 });
 

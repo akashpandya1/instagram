@@ -70,7 +70,7 @@ function selectHomeFeed(userId) {
         (resolve, reject) => {          
            db.all("select u.name, u.pk_user, p.postpic, p.posttime, c.text  from user u, post p, comment c " + 
              "where u.pk_user = p.posterid and  u.pk_user =c.commenterid and p.pk_post = c.postid and " + 
-             "u.pk_user in ( select followeeId from following where followerId = ?)", userId,
+             "u.pk_user in ( select followeeId from following where followerId = ?) and u.pk_user = ?", userId, userId,
            function (err, rows) {          
                     if (err) {
                         console.log(err);
@@ -91,24 +91,44 @@ function selectHomeFeed(userId) {
             console.log(err);
         });
 }
- 
 
 
-var jSONStr = '{'+'"name" : "Raj",'+'"age"  : 32,'+'"married" : false'
-    +'}';
-
- //   dbCreatePost(db, jSONStr);
-function dbCreatePost(jSONStr){
+exports.dbAddToCommentTable=dbAddToCommentTable;
+function dbAddToCommentTable(jsonStr) {
     return new Promise(function (resolve, reject) {
-        var stmt = db.prepare("Insert into Post (PosterId, PostPic) values (?,?);  Insert into Comment (CommenterId, PostId, Text) values (?,(Select PK_Post from Post where posterid=? and postpic=?),?) ",function (err) {
-            if (err) {
-                reject(err);
-                console.log(err);
-            }else {
-                var JsonRun = JSON.parse(jSONStr);
-                stmt.run(JsonRun[0].postUser,JsonRun[0].postData,JsonRun[0].postComment);
-                stmt.finalize();
-            }
+        var sqlJson = JSON.parse(jsonStr);
+        console.log("postid:"+sqlJson[0].postUser+"PostPic:"+sqlJson[0].postData+"PostComment:"+sqlJson[0].postComment);
+        db.run("Insert into Comment (CommenterId, PostId, Text) values (?,(Select PK_Post from Post where posterid=? and postpic=?),?);",
+            sqlJson[0].postUser, sqlJson[0].postUser, sqlJson[0].postData,sqlJson[0].postComment,  function (err) {
+                if (err) {
+                    reject(err);
+                    console.log(err);
+                }
+                else {
+                    console.log("success");
+                    resolve();
+
+                }
+            });
+    });
+}
+
+exports.dbAddToPostsTable=dbAddToPostsTable;
+function dbAddToPostsTable(jsonStr) {
+    return new Promise(function (resolve, reject) {
+        var sqlJson = JSON.parse(jsonStr);
+        console.log("postid:"+sqlJson[0].postUser+"PostPic:"+sqlJson[0].postData);
+        db.run("Insert into Post (PosterId, PostPic) values (?,?)",
+            sqlJson[0].postUser, sqlJson[0].postData,  function (err) {
+                if (err) {
+                    reject(err);
+                    console.log(err);
+                }
+                else {
+                    console.log("success");
+                    resolve();
+
+                }
             });
     });
 }
